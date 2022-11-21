@@ -16,7 +16,7 @@ sudo apt -y install ncat
 - sudo apt install ibus-pinyin
 ## Teamviewr
 -  sudo dpkg -i  teamviewer 
--  sudo apt-get install -f 
+-  sudo apt-get instll -f 
 
 ## oh my zsh
 - `sudo apt-get install zsh` 安装zshch
