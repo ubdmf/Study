@@ -5,7 +5,7 @@
 - `git add . ` (提交当前目录的改动)
 - ` git branch -M main  ` 新建一个主分支
 - `git push -u origin/master` 第一次网远程分支推送代码   
-
+- 修改以及查看用户信息 ![修改以及查看用户信息](./img/git_config_user_name.png)
 
 ## 如何新建一个本地仓库提交到远程
 -  先在git创建一个仓库（不勾选创建readme.md ，直接creat，然后会有一些操作提示）
@@ -17,3 +17,5 @@
 -  `git add —A ` (提交所有的改动)
 - ` git commit -m "init" `
 - `git push origin master ` 推到远程分支
+
+
