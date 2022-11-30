@@ -138,8 +138,14 @@ void Fit::polyfit_(const T* x, const T* y, size_t length, int poly_n,bool isSave
 ```
 ### **resize/reserve**
 
+### Sort 排序
 
-
+- std::sort(vec.begin(),vec.end()); //默认从小到大排序
+- std::sort(vec.begin(),vec.end()，Compare()); //写一个
+- sort 的比较函数写法
+    - 申明比较类
+    - 重载类的比较函数
+### copy 拷贝
 ## 3. array
 
 ## 4. map
@@ -151,3 +157,9 @@ void Fit::polyfit_(const T* x, const T* y, size_t length, int poly_n,bool isSave
 ## 6. 类
 
 - 拷贝构造函数
+
+
+## 符号重载
+
+-   重载函数调用
+ bool operator()(const float a,const float b)const{}
