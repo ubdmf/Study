@@ -37,6 +37,14 @@
 -  `git reset --soft xxxx(commit id)`
 -  回退到之前的某个commit，但是之前的修改还在，但是一个未commit的状态
 
+### 往前退一个commit，并合并当前改动到上一个commit
+- git reset HEAD^   //// 往前退1个commit
+- git add . 
+- git commit --amend 
+
+  git reset HEAD~2   // 往前退2个commit
+- 
+
 
 ## git checkout -B
 
