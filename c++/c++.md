@@ -122,6 +122,9 @@ delete[]X; delete[] Y; delete[]Z;
 ```
 ## 2. vector
 ### vector 初始化
+    - std::vector<int> l;
+    - l = std::vector<int>(number, default_idx);
+
 
 ### vector 转为指针
 ```c++
@@ -145,11 +148,45 @@ void Fit::polyfit_(const T* x, const T* y, size_t length, int poly_n,bool isSave
 - sort 的比较函数写法
     - 申明比较类
     - 重载类的比较函数
+    - lamda 表达式
+        - ![lambda参数](./imgs/lambdaexpsyntax.png)
+          1. [] capture 子句（在 C++ 规范中也称为 Lambda 引导)
+          2. () 参数列表（可选）（也称为 Lambda 声明符）
+          3. mutable 规范（可选)
+          4. exception-specification（可选）
+          5. trailing-return-type（可选)
+        - 
+        ```c++
+        sort(recom_spd_list_.begin(), recom_spd_list_.end(),
+       [](const ISAOutput& a, const ISAOutput& b) -> bool {
+         return a.recom_spd_dist < b.recom_spd_dist;
+       });
+       ```
+        - lambda表达式是：
+        `[](const ISAOutput& a, const ISAOutput& b) -> bool {
+         return a.recom_spd_dist < b.recom_spd_dist;}`
+            - const ISAOutput& a, const ISAOutput& b 函数传入的参数
+            - ->bool 指定函数的返回值
+            - {} 里是函数的表达式
+
+
+
 ### copy 拷贝
 ## 3. array
 
 ## 4. map
-
+  - 正向遍历
+    - auto 等价于 std::map<int,int>::iterator
+    - for(auto itr = map.begin();itr++;itr!=map.end())
+    
+    - map<int,int>::iterator itr = map.begin();
+    - while(itr !=map.end()){itr++}
+  - 反向遍历
+    - auto 等价于 std::map<int,int>::reverse_iterator 
+    - for(auto itr= map.rbegin();itr++;itr!=map.end())
+    
+    - std::map<int,int>::reverse_iterator itr = map.rbegin();
+    - while(itr!=map.rend()){itr++}
 ## 5. sturct
    ### struct 初始化
     - CrossMatchCoastInfo cross_tmp{};
