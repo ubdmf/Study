@@ -61,4 +61,9 @@
 ## 强制把改动推到指定分支
 - `git push -f origin HEAD:user/xinyi/NT2ADR-907`  //强推代码到某一指定分支
 
+## 强推改动到仓库上的某一分支
+- git push -f git@ad-gitlab.nioint.com:ad/edge/midware/common_lib.git  HEAD:user/xinyi/NT2ADD-xxx 
+ (git push -f 仓库地址 HEAD：分支）名)          
+
+
 
