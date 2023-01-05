@@ -20,3 +20,14 @@
 ## pip
 - pip show adwsdk 可以查看pip安装的位置
 
+## docker
+
+- docker ps 查看所有运行中的docker id
+- docker stop f47bf45584a7 (强行终止某个镜像进程)
+- docker run -t -i xxx 进入镜像
+    -i: 交互式操作 （如果不加-i，没有指定交互式操作的话，会导致无法使用exit进行退出）
+    -t: 终端 
+
+
+
+

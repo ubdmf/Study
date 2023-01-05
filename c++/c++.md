@@ -11,6 +11,8 @@
 
 -  **静态数组赋值**
   - `double ceres_r0[6]={ 0,1,2,0,0,0 };`
+  - `float ceres_r0[] = {2.0F, 5.0F, 100.0F};`
+
 
   - **数组初始化**
     - `float h_mat_[kMeasDimension][kStateDimension]{};`
@@ -122,6 +124,7 @@ delete[]X; delete[] Y; delete[]Z;
 ```
 ## 2. vector
 ### vector 初始化
+    （可以在头文件中先定义l， 在类内构造函数的时候再对l进行初始化)
     - std::vector<int> l;
     - l = std::vector<int>(number, default_idx);
 
@@ -148,6 +151,11 @@ void Fit::polyfit_(const T* x, const T* y, size_t length, int poly_n,bool isSave
 - sort 的比较函数写法
     - 申明比较类
     - 重载类的比较函数
+        - 要比较的是类的成员变量，可以在类内写一个比较函数，sort的时候直接调这个比较函数
+        - `std::sort(selected_obj_his_info_.begin(), selected_obj_his_info_.end(),SortAsc);`
+           - `bool LanePreprocess::SortAsc(const Hist_Info& a, const Hist_Info& b) {
+  return a.position.x < b.position.x;
+} `
     - lamda 表达式
         - ![lambda参数](./imgs/lambdaexpsyntax.png)
           1. [] capture 子句（在 C++ 规范中也称为 Lambda 引导)
@@ -173,14 +181,27 @@ void Fit::polyfit_(const T* x, const T* y, size_t length, int poly_n,bool isSave
 
 ### copy 拷贝
 ## 3. array
+- 初始化 
+  - 初始化的时候指定数据类型和维度：
+      - std::array<math::Vector2f, 4> a; 
+  - 取值 a.at(0)
+
 
 ## 4. map
   - 正向遍历
     - auto 等价于 std::map<int,int>::iterator
     - for(auto itr = map.begin();itr++;itr!=map.end())
-    
+    //正向迭代指针
     - map<int,int>::iterator itr = map.begin();
     - while(itr !=map.end()){itr++}
+    <P> //正向遍历 </P>
+   
+    ```c++
+    auto traj = map.begin();
+    while(traj!=map.end()){
+      ++traj;
+    }
+    ```
   - 反向遍历
     - auto 等价于 std::map<int,int>::reverse_iterator 
     - for(auto itr= map.rbegin();itr++;itr!=map.end())
@@ -190,7 +211,7 @@ void Fit::polyfit_(const T* x, const T* y, size_t length, int poly_n,bool isSave
 ## 5. sturct
    ### struct 初始化
     - CrossMatchCoastInfo cross_tmp{};
-    - 
+    - struct 内也可以定义构造函数
 ## 6. 类
 
 - 拷贝构造函数
@@ -200,3 +221,14 @@ void Fit::polyfit_(const T* x, const T* y, size_t length, int poly_n,bool isSave
 
 -   重载函数调用
  bool operator()(const float a,const float b)const{}
+
+ ## STL库
+
+ ### std::move
+  1. std::move + std::back_inserter
+    - 把x y 两个vector拼接到v这个Vector的末尾
+    - `std::move(x.begin(), x.end(), std::back_inserter(v));`
+      `std::move(y.begin(), y.end(), std::back_inserter(v));`
+  2. 在 C++ 中连接两个Vector
+  https://www.techiedelight.com/zh/concatenate-two-vectors-cpp/
+
