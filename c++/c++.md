@@ -127,6 +127,8 @@ delete[]X; delete[] Y; delete[]Z;
     （可以在头文件中先定义l， 在类内构造函数的时候再对l进行初始化)
     - std::vector<int> l;
     - l = std::vector<int>(number, default_idx);
+    - vector<int> dst(8, -1); 直接初始化位长度位8，默认值为-1的vector
+    - vector<int> src = {0,1,2,3,4} 初始化的时候直接给长度和值
 
 
 ### vector 转为指针
@@ -179,7 +181,31 @@ void Fit::polyfit_(const T* x, const T* y, size_t length, int poly_n,bool isSave
 
 
 
-### copy 拷贝
+## copy 拷贝
+- copy只负责复制，不负责申请空间，所以复制前必须有足够的空间
+- 将容器的元素从给定的范围从给定的开始位置复制到另一个容器
+### 把数组元素复制到vector中
+- int arr[] = { 10, 20, 30, 40, 50 };
+- vector<int> v1(5);
+- copy(arr, arr + 5, v1.begin());
+### vector 插入到数组中
+- vector<int> src = {0,1,2,3,4}
+- int dst[8] = {-1}
+- std::copy(src.begin(),src.end(),dst);
+### 数组插入到数组中
+- int src[5]= {0,1,2,3,4};
+- int dst[8]={-1};
+- std::copy(src, src + 5, dst);
+### vector 复制到 vector
+- vector<int> src = {0,1,2,3,4}
+- vector<int> dst(8,-1);
+- std::copy(src.begin(),src.end(),dst.begin())
+### vector 插入到vector末尾
+- vector<int> src = {0,1,2,3,4}
+- vector<int> dst = {-10,-9};
+- std::copy(src.begin(),src.end(),std::back_inserter(dst));
+
+
 ## 3. array
 - 初始化 
   - 初始化的时候指定数据类型和维度：
