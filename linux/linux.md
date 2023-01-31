@@ -27,6 +27,15 @@
 - docker run -t -i xxx 进入镜像
     -i: 交互式操作 （如果不加-i，没有指定交互式操作的话，会导致无法使用exit进行退出）
     -t: 终端 
+-  docker run -itd -v # 把容器的目录映射到宿主机上，左边是宿主机目录，右边是容器里的目录
+
+## 解压zip文件
+- unzip 'tmp.zip'
+
+## 解压tar文件
+-   tar -zxf x.tar
+
+
 
 
 

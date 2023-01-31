@@ -37,3 +37,4 @@ sudo apt -y install ncat
   - `plugins=(git zsh-autosuggestions zsh-syntax-highlighting)`
   - `ZSH_THEME="ys"`
   - `source ~/.zshrc`
+
