@@ -19,6 +19,8 @@ VFE：多层的体素特征编码
 - 环境配置：
 ## Pointpilar
 
+- 整个模型包括 VFE，MAP_TO_BEV，BACKBONE_2D，DENSE_HEAD，POST_PROCESSING这5个部分
+
 ## 框架：
 -   点云转换为伪图像，进而通过2D卷积实现目标检测
     - Pillar Feature Net：将输入的点云转换为稀疏的Pseudo image
@@ -31,6 +33,8 @@ VFE：多层的体素特征编码
 - 生成伪图像：通过Scatter运算实现的。在PointPillars网络结构图中从Point cloud构造Stacked Pillars的
 3. Loss函数
 - 损失函数有三部分来组成，分别是定位Loss,分类Loss和朝向角Loss
+
+
 
 ## 数据处理
 
@@ -68,7 +72,7 @@ VFE：多层的体素特征编码
  ln -s /data/lidar_data/kitti_lidar/testing   ./data/kitti/ 
  ln -s /data/lidar_data/kitti_lidar/training  ./data/kitti/  
 ```
-3. 执行脚本对数据进行预处理（为了保证高效加载数据，OpenPCDet的作者会预先生成训练数据的字典）
+3. 执行脚本对数据进行预处理（为了保证高效加载数据，把数据处理成字典格式）
 ```bash
  python -m pcdet.datasets.kitti.kitti_dataset create_kitti_infos tools/cfgs/dataset_configs/kitti_dataset.yaml
  ```
@@ -90,7 +94,25 @@ python test.py --cfg_file ./cfgs/kitti_models/pointpillar.yaml --ckpt ../checkpo
 6.1 单GPU训练
     - python train.py --cfg_file cfgs/kitti_models/pv_rcnn.yaml --batch_size 1 --workers 1 --epochs 10 （workers的含义？？）
     - python train.py --cfg_file cfgs/kitti_models/pointpillar.yaml --batch_size=3 --epochs=10 --extra_tag 'my_data_1'
+6.12 多GPU训练
+    - CUDA_VISIBLE_DEVICES=0,1,2,3 python -m torch.distributed.launch --nproc_per_node=4 train.py --launcher pytorch --batch_size 8 --extra_tag baseline --cfg_file cfgs/kitti_models/pointpillar.yaml
+    - 其中 CUDA_VISIBLE_DEVICES=0,1,2,3 表明使用gpu 0,1,2,3
+    - python -m torch.distributed.launch 使用torch.distributed.launch工具进行分布式训练
+    - --nproc_per_node=4表明使用4个gpu
+6.21 pointpilar配置文件以及可改参数：
 
+6.22 train.py 解析
+- parse_config() 给定所需参数
+- build dataloader按照配置文件创建dataloader
+- build_network()
+(module_topology=['vfe', 'backbone_3d', 'map_to_bev_module', 'pfe',
+            'backbone_2d', 'dense_head',  'point_head', 'roi_head']
+build_networks是根据 self.module_topology 的设定逐个进行模块构建
+- pointpilar->Detector3DTemplate->module_topology->module_topology[i].build_network
+- forward函数的任务是需要把输入层，网络层，输出层链接起来，实现信息的前向传导，让损失函数调用backward。
+- 训练模型。调用model.train（）
+- 测试模型，调用model.eval()
+ 
 7. 3D目标检测的评估标准
    - AP（平均精度）
         - 平均精度 (AP) 度量的想法是将精度-召回曲线内的信息压缩成一个数字，可以用来轻松地比较算法之间的关系

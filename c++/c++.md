@@ -181,9 +181,7 @@ void Fit::polyfit_(const T* x, const T* y, size_t length, int poly_n,bool isSave
 
 
 
-## copy 拷贝
-- copy只负责复制，不负责申请空间，所以复制前必须有足够的空间
-- 将容器的元素从给定的范围从给定的开始位置复制到另一个容器
+
 ### 把数组元素复制到vector中
 - int arr[] = { 10, 20, 30, 40, 50 };
 - vector<int> v1(5);
@@ -205,7 +203,17 @@ void Fit::polyfit_(const T* x, const T* y, size_t length, int poly_n,bool isSave
 - vector<int> dst = {-10,-9};
 - std::copy(src.begin(),src.end(),std::back_inserter(dst));
 
-
+### vector unique 函数 去重
+- unique函数功能是去除相邻的重复元素，注意是相邻，所以必须先使用sort函数。还有一个容易忽视的特性是它并不真正把重复的元素删除。之所以说并不真正把重复的元素删除，因为unique实际上并没有删除任何元素，而是将无重复的元素复制到序列的前段，从而覆盖相邻的重复元素
+- 先构造一个vector,将vector排序
+-  sort(goal.begin(), goal.end());// 1, 2, 3, 3, 4, 4, 6, 7, 8, 9
+- 然后使用unique算法，unique返回值是重复元素的开始位置
+- auto pos = unique(goal.begin(), goal.end());    // 1, 2, 3, 4, 6, 7, 8, 9, 3, 4 (指针指向3)
+- 最后删除后面的那段重复部分
+-  goal.erase(pos, goal.end()); // 得到1, 2, 3, 4, 6, 7, 8, 9
+## copy 拷贝
+- copy只负责复制，不负责申请空间，所以复制前必须有足够的空间
+- 将容器的元素从给定的范围从给定的开始位置复制到另一个容器
 ## 3. array
 - 初始化 
   - 初始化的时候指定数据类型和维度：
@@ -234,6 +242,17 @@ void Fit::polyfit_(const T* x, const T* y, size_t length, int poly_n,bool isSave
     
     - std::map<int,int>::reverse_iterator itr = map.rbegin();
     - while(itr!=map.rend()){itr++}
+  - unordered_map
+    - 根据key去查找value，需要先判断下是否在容器内
+    -   if (flg_obj_out_edge_.find(obj->GetID()) != flg_obj_out_edge_.end()) {
+      if (flg_obj_out_edge_.find(obj->GetID())->second){
+        continue;
+      } 
+    }
+  - flg_obj_out_edge_[obj->GetID()]; 如果直接用中括号相当于插入一对key
+  - 可以通过删除key，去删除整个目标 -> flg_obj_out_edge_.erase(obj->GetID());
+  - 
+
 ## 5. sturct
    ### struct 初始化
     - CrossMatchCoastInfo cross_tmp{};
